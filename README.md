@@ -1,17 +1,15 @@
-# Transfer Service
-
-This README would normally document whatever steps are necessary to get your application up and running.
-
+# Transaction Service
+This service is an assessment based use case. The aim to build a service which can handle transfers and transactions at large  
 ### Transaction service ###
 
-* Transaction Service
-* 0.0.1
+* Name: Transaction Service
+* Version: 0.0.1
 
-## Assessment usecases
-- Assessment usecases is located [here](UseCase.pdf).
+## Application Requirements
+- The full overview of the requirement can be found [here](UseCase.pdf).
 
 ## Architechtural Choice
-This project is built using the ### Layerered architecture ### [Layered Architecture](layered-architecture.webp)
+This project is built using the ### Layered architecture ### [Layered Architecture](layered-architecture.webp)
 
 ### Technologies used ###
 
@@ -23,6 +21,7 @@ The technologies used for developing this application includes:
 * JOOQ (for the persistence layer and dynamic query). see documentation [here](https://www.jooq.org/)
 * docker compose for running in local environment
 * github for version control and application deployment
+* Rabbit MQ
 
 ### To set up on local environment ###
 
