@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: transaction-service
+
+  datasource:
+    url: ${TRANSFERSERVICE_DATASOURCE_URL:jdbc:postgresql://localhost:5433/transaction_service}
+    username: ${TRANSFERSERVICE_DATASOURCE_USERNAME:postgres}
+    password: ${TRANSFERSERVICE_DATASOURCE_PASSWORD:postgres}
+
+  rabbitmq:
+    host: ${REM-RABBIT-MQ-HOST:localhost}
+    port: ${REM-RABBIT-MQ-PORT:5672}
+    username: ${REM-RABBIT-MQ-USERNAME:user}
+    password: ${REM-RABBIT-MQ-PASSWORD:password}
+
+transactions:
+  commissions:
+    #cron: ${TRANSACTIONS_COMMISSIONS_CRON:0 0 13 * * ?}
+    cron: ${TRANSACTIONS_COMMISSIONS_CRON:0 */5 * * * ?}
+    value: ${TRANSACTIONS_COMMISSIONS_VALUE:20}
+  value: ${TRANSACTIONS_VALUE:0.5}
+  amount-cap: ${TRANSACTIONS_AMOUNT_CAP:100}
+
+
+  summary:
+    cron: ${TRANSACTIONS_SUMMARY_CRON:0 */5 * * * ?}
+
+
+logging:
+  level:
+    org:
+      jooq: DEBUG

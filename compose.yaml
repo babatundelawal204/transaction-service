@@ -1,0 +1,54 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=transaction_service'
+      - 'POSTGRES_PASSWORD=postgres'
+      - 'POSTGRES_USER=postgres'
+    ports:
+      - '5433:5432'
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 10s
+      retries: 5
+
+  rabbitmq:
+    image: "rabbitmq:management"
+    ports:
+      - '4369:4369'
+      - '5672:5672'
+      - '25672:25672'
+      - '15672:15672'
+    environment:
+      - RABBITMQ_SECURE_PASSWORD=yes
+      - RABBITMQ_LOGS=-
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  app:
+    build: ..
+    ports:
+      - '8080:8080'
+    environment:
+      - 'TRANSFERSERVICE_DATASOURCE_URL=jdbc:postgresql://localhost:5433/transaction_service'
+      - 'TRANSFERSERVICE_DATASOURCE_USERNAME=postgres'
+      - 'TRANSFERSERVICE_DATASOURCE_PASSWORD=postgres'
+      - 'REM-RABBIT-MQ-HOST=localhost'
+      - 'REM-RABBIT-MQ-PORT=5672'
+      - 'REM-RABBIT-MQ-USERNAME=user'
+      - 'REM-RABBIT-MQ-PASSWORD=password'
+      - 'TRANSACTIONS_COMMISSIONS_CRON=0 */5 * * * ?'
+      - 'TRANSACTIONS_COMMISSIONS_VALUE=20'
+      - 'TRANSACTIONS_VALUE=0.5'
+      - 'TRANSACTIONS_AMOUNT_CAP=100'
+      - 'TRANSACTIONS_SUMMARY_CRON=0 */5 * * * ?'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
