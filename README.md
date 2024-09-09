@@ -49,7 +49,7 @@ To run the app, do the following:
 - navigate to the directory of the project
 - run `docker compose up`
 ### Testing Locally ###
-The code contains a [api-docs.yml](./api-docs.yml) to test locally. you can also visit [swagger page](http://localhost:8080/swagger-ui.html)
+The code contains a [api-docs.yml](./api-docs.yaml) to test locally. you can also visit [swagger page](http://localhost:8080/swagger-ui.html)
 
 ### Who do I talk to? ###
 
